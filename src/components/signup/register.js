@@ -1,4 +1,37 @@
+import React, { useState } from "react";
+
 function Register() {
+
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: "",
+      });
+
+      const handleSubmit = async (event) => {
+        console.log(formData);
+        event.preventDefault(); // Prevents the default form submission behavior
+        try {
+          const response = await fetch("API_ENDPOINT_URL", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          });
+          const data = await response.json();
+          console.log(data); // Log the response data
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    
+      const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({ ...formData, [name]: value });
+      };
+    
+
 
     return (
 
@@ -12,20 +45,46 @@ function Register() {
                             <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> start your 14-day free trial</a>
                         </p>
                 </div>
-                <form class="mt-8 space-y-6" action="#" method="POST">
+                <form class="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <input type="hidden" name="remember" value="true" />
                         <div class="-space-y-px rounded-md shadow-sm">
                              <div>
                                 <label for="name" class="sr-only">Name</label>
-                                <input id="name" name="name" type="text" autocomplete="name" required class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Your Name" />
+                                <input 
+                                id="name" 
+                                name="name" 
+                                type="text" 
+                                autocomplete="name" 
+                                value={formData.name}
+                                 onChange={handleInputChange}
+                                required 
+                                class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Your Name" />
                             </div>
                             <div>
                                 <label for="email-address" class="sr-only">Email address</label>
-                                <input id="email-address" name="email" type="email" autocomplete="email" required class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Email address" />
+                                <input 
+                                id="email-address" 
+                                name="email" 
+                                type="email" 
+                                autocomplete="email" 
+                                required 
+                                value={formData.email}
+                                onChange={handleInputChange}
+                                class="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                                placeholder="Email address" />
                             </div>
                             <div>
                                 <label for="password" class="sr-only">Password</label>
-                                <input id="password" name="password" type="password" autocomplete="current-password" required class="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Password" />
+                                <input 
+                                id="password" 
+                                name="password" 
+                                type="password" 
+                                autocomplete="current-password" 
+                                required 
+                                value={formData.password}
+                                 onChange={handleInputChange}
+                                class="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                                placeholder="Password" />
                             </div>
                         </div>
 
